@@ -1,0 +1,31 @@
+<project name="lab7" default="war-build">
+	<property name="src" location="src"/>
+	<property name="build" location="classes"/>
+	<property name="web" location="web"/>
+	<property name="lib" location="lib"/>
+
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+	
+	<target name="build" depends="init">
+		<javac srcdir="${src}"
+			destdir="${build}"
+			classpath="${lib}/javax_json.jar:${lib}/javax.jar"/>
+	</target>
+
+	<target name="war-build" depends="build">
+		<war destfile="lab7.war" webxml="WEB-INF/web.xml">
+			<fileset dir="${web}"/>
+			<lib dir="${lib}"/>
+			<classes dir="${build}"/>
+			<zipfileset dir="assets" prefix="assets"/>
+		</war>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="classes" includes="*"/>
+		</delete>
+	</target>
+</project>

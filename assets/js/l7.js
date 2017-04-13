@@ -1,6 +1,4 @@
-
-
-R = 0;
+R = 1;
 k = 50;
 x_val = [];
 y_val = [];
@@ -27,12 +25,27 @@ function selectRadius(num)
 		{
 			rCheckBoxes[i].checked = false;
 		}
-		if (rCheckBoxes[i].checked)
+		if (i == num && rCheckBoxes[i].checked)
 		{
 			R = rCheckBoxes[i].value;
 		}
 	}
 	canvasFill();
+}
+
+function addTableEntry(x, y, R, S)
+{
+	var table = document.getElementById("results");
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+
+	cell1.innerHTML = x;
+	cell2.innerHTML = y;
+	cell3.innerHTML = R;
+	cell4.innerHTML = S == 1 ? "Yes" : "No";
 }
 
 function ychk(textbox) 
@@ -69,6 +82,7 @@ function canvasFill()
 
 function setPoint(event)
 {
+	canvas = document.getElementById("graph");
 	rect = canvas.getBoundingClientRect();
 	offset = (rect.width - canvas.width) / 2 + 1;
 	x = event.clientX - rect.left - offset;
@@ -187,3 +201,36 @@ function drawFigure(context)
 	context.closePath();
 	context.fill();
 }
+
+function doRequest(x, y)
+{
+	return_data = [];
+	canvas = document.getElementById("graph");
+	$.ajax({
+			type:"get",
+			url:"/lab7/checking",
+			data:{
+				x_coord: JSON.stringify(x),
+				y_coord: JSON.stringify(y),
+				rBox: R
+			},
+			success: onAjaxSuccess
+		}
+		);
+	function onAjaxSuccess(data)
+	{
+		return_data = JSON.parse(data);
+		context = canvas.getContext("2d");
+		for (i = 0; i < return_data.length; ++i)
+		{
+			coord_x = x[i] * k + 300;
+			coord_y = -y[i] * k + 300;
+			drawPoint(context, coord_x, coord_y, return_data[i]);
+			addTableEntry(x[i], y[i], R, return_data[i]);
+		}
+	}
+}
+
+window.onload = function() {
+	canvasFill();
+};

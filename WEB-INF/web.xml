@@ -28,4 +28,12 @@
         <servlet-name>AreaCheckServlet</servlet-name>
         <url-pattern>/checking</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>Lab7.ControllerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
 </web-app>

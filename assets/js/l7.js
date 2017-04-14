@@ -49,8 +49,6 @@ function ychk(textbox)
 		textbox.style.outline = "none";
 		btn.disabled = false;
 	}
-	selectRadius(2);
-	//canvasFill();
 }
 
 function canvasFill()

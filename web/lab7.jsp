@@ -74,7 +74,7 @@
    							</tr>
    							<tr>
    							<td class="leftcol">Введите R:</td><td class="rightcol"><li>
-                				<ul><input type="checkbox" onclick="selectRadius(0)" selected="true" name="rBox" value="1"> 1 </ul>
+                				<ul><input type="checkbox" onclick="selectRadius(0)" name="rBox" value="1" checked> 1 </ul>
                 				<ul><input type="checkbox" onclick="selectRadius(1)" name="rBox" value="2"> 2 </ul>
                 				<ul><input type="checkbox" onclick="selectRadius(2)" name="rBox" value="3"> 3 </ul>
                 				<ul><input type="checkbox" onclick="selectRadius(3)" name="rBox" value="4"> 4 </ul>

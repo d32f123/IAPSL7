@@ -7,9 +7,9 @@
 	<title>Document</title>
 	<meta name="description" content="5 Лаба" />
 	<meta name="keywords" content="lab5,itmo" />
-	<link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="/assets/js/l7.js"></script>
+	<script src="assets/js/l7.js"></script>
 </head>
 <body>
 
@@ -35,26 +35,19 @@
 
 			<div class="content">
 
-				<h1>Задача</h1>
-
-				<div class="films_block">
-
-					<a href="#"><img src="/assets/img/areas2.png" /></a>
-
-				</div>
-
 				<div class="main_block">
 
 					<hr>
-					<h2>Интерактивный элемент</h2>
 					<div class="interactive_element">
+						<h2>Интерактивный элемент</h2>
 						<canvas id="graph" onclick="setPoint(event)" width="600" height="600"></canvas>
 					</div> 
 
-					<h2>Формы</h2>
+					
 					<div class="main_content">
-						<form method="post" action="checking" id="getdata">
-						<table name="table" cellspacing="0" cellpadding="0">
+						<h2>Формы</h2>
+						<form method="post" action="controller" id="getdata">
+						<table name="table" id="maintable" cellspacing="0" cellpadding="0">
 						
    							<tr> 
     						<td class="leftcol">Введите X:</td><td class="rightcol"><li>
@@ -124,6 +117,13 @@
 
 			</div>
 
+		</div>
+
+		<div class="footer">
+			<p>
+				<a href="">Лаба 2</a>
+			</p>
+			<p>d32f123@yandex.ru</p>
 		</div>
 
 	</div>

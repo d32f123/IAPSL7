@@ -46,10 +46,6 @@ a, a:hover {
 	color: #aeb002;
 }
 
-ul {
-	margin: 2px 0 22px 17px;
-}
-
 ul li {
 	margin; 0 0 6px 0;
 	padding: 0 0 4px 5px;
@@ -133,7 +129,6 @@ ul.menu li a:hover {
 }
 
 .site_content {
-	width: 880px;
 	overflow: hidden;
 	margin: 20px auto 0 auto;
 	background-color: white;
@@ -175,9 +170,7 @@ ul.menu li a:hover {
 
 .content {
 	text-align: left;
-	width: 620px;
 	padding: 0 0 0 5px;
-	float: left;
 }
 
 .content a {
@@ -195,13 +188,13 @@ ul.menu li a:hover {
 }
 
 .main_content table .leftcol {
-	width: 65%;
 	vertical-align: top;
 	padding: 5px;
 	margin: 0 20px 0 20px;
 }
 
 .main_content table .rightcol {
+	width: 65%;
 	vertical-align: top;
 	padding: 5px;
 	margin: 0 20px 0 20px;
@@ -240,4 +233,23 @@ ul.menu li a:hover {
 
 .footer p {
 	padding: 0 0 10px 0;
+}
+
+.interactive_element {
+	float: left;
+	margin: 0 0 10px 100px;
+}
+
+.main_content {
+	float: right;
+	width: 50%;
+}
+
+.main_content table {
+	width: 90%;
+}
+
+ul {
+	display: inline-block;
+	padding: 0 5px 0 5px;
 }

@@ -75,27 +75,44 @@ public class AreaCheckServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Content-Type", "text/html; charset=UTF-8");
-        PrintWriter out=response.getWriter();
-        String xString = request.getParameter("x_coord");
-        String yString = request.getParameter("y_coord");
-        String rString = request.getParameter("rBox");
-
-
-        JsonReader jsonReader = Json.createReader(new StringReader(xString));
-        JsonArray x_array = jsonReader.readArray();
-        jsonReader = Json.createReader(new StringReader(yString));
-        JsonArray y_array = jsonReader.readArray();
-        int r = Integer.parseInt(rString);
-
-        JsonArrayBuilder result = Json.createArrayBuilder();
-
-        for (int i = 0; i < x_array.size(); ++i)
-        {
-            result.add(checkArea(x_array.getJsonNumber(i).doubleValue(), y_array.getJsonNumber(i).doubleValue(), r));
+        if(list==null) {
+            list=new ArrayList<Point>();
+            config.getServletContext().setAttribute("list", list);
         }
-        JsonArray res = result.build();
+        String delete = request.getParameter("delete");
+        if (delete != null && delete.matches("true"))
+        {
+            list.clear();
+            response.sendRedirect("/lab7/lab7.jsp");
+        }
+        else
+        {
+            PrintWriter out=response.getWriter();
+            String xString = request.getParameter("x_coord");
+            String yString = request.getParameter("y_coord");
+            String rString = request.getParameter("rBox");
 
-        out.println(res);
+
+            JsonReader jsonReader = Json.createReader(new StringReader(xString));
+            JsonArray x_array = jsonReader.readArray();
+            jsonReader = Json.createReader(new StringReader(yString));
+            JsonArray y_array = jsonReader.readArray();
+            int r = Integer.parseInt(rString);
+
+            JsonArrayBuilder result = Json.createArrayBuilder();
+
+            for (int i = 0; i < x_array.size(); ++i)
+            {
+                double x = x_array.getJsonNumber(i).doubleValue();
+                double y = y_array.getJsonNumber(i).doubleValue();
+                boolean isInArea = checkArea(x, y, r);
+                list.add(new Point(x, y, r, isInArea));
+                result.add(isInArea);
+            }
+            JsonArray res = result.build();
+
+            out.println(res);
+        }
     }
 
     public class Point {
@@ -105,9 +122,17 @@ public class AreaCheckServlet extends HttpServlet {
         public boolean isInArea;
         public  int R;
     
-        Point(int x,int y) {
+        Point(double x,double y) {
             this.x=x;
             this.y=y;
+        }
+
+        Point(double x, double y, int R, boolean isInArea)
+        {
+            this.x = x;
+            this.y = y;
+            this.R = R;
+            this.isInArea = isInArea;
         }
     }
 
@@ -118,7 +143,7 @@ public class AreaCheckServlet extends HttpServlet {
         if(x<=0&&y>=0&&y<=x/2+R/2.0){
             return true;
         }
-        if(x>=0&&y<=0&&x*x+y*y<=R/4.0){
+        if(x>=0&&y<=0&&x*x+y*y<=R*R/4.0){
             return true;
         }
         return false;

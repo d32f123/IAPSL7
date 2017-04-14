@@ -15,6 +15,29 @@ function setRadius()
 	}
 }
 
+function clear1()
+{
+	$.ajax({
+			type:"get",
+			url:"/lab7/controller",
+			data: {
+				delete: "true"
+			},
+			success: clearlist
+		}
+		);
+	function clearlist(result)
+	{
+		var table = document.getElementById("results");
+		var length = table.rows.length;
+		for (var i = 1; i < length; ++i) //keeping the heading
+		{
+			table.deleteRow(1);
+		}
+		canvasFill();
+	}
+}
+
 function selectRadius(num) 
 {
 	rCheckBoxes = document.forms[0].elements.rBox;
@@ -191,7 +214,7 @@ function doRequest(x, y)
 	var canvas = document.getElementById("graph");
 	$.ajax({
 			type:"get",
-			url:"/lab7/checking",
+			url:"/lab7/controller",
 			data:{
 				x_coord: JSON.stringify(x),
 				y_coord: JSON.stringify(y),
@@ -229,25 +252,41 @@ function addTableEntry(x, y, R, S)
 	cell4.innerHTML = S == 1 ? "Yes" : "No";
 }
 
-/*function initiateGraph()
+function initiateGraph()
 {
 	var canvas = document.getElementById("graph");
 	var context = canvas.getContext("2d");
 	var table = document.getElementById("results");
 	var length = table.rows.length;
-	for (var i = 0; i < length; ++i)
+	var mostRecentIndex = 1;
+	for (var i = 2; i < length; ++i)
+	{	
+		var rowPrev = table.rows[i - 1];
+		var rowCurr = table.rows[i];
+		if (parseFloat(rowPrev.cells[2].innerHTML) != parseFloat(rowCurr.cells[2].innerHTML))
+		{
+			mostRecentIndex = i;
+		}
+	}
+
+	rCheckBoxes = document.forms[0].elements.rBox;
+	var currentRadius = parseInt(table.rows[mostRecentIndex].cells[2].innerHTML);
+	rCheckBoxes[currentRadius - 1].checked = true;
+	selectRadius(currentRadius - 1);
+
+	for (var i = mostRecentIndex; i < length; ++i)
 	{
 		var row = table.rows[i];
-		var X = row.cells[0];
-		var Y = row.cells[1];
-		var R = row.cells[2];
-		var SString = row.cells[3];
+		var X = parseFloat(row.cells[0].innerHTML) * k + 300;
+		var Y = - parseFloat(row.cells[1].innerHTML) * k + 300;
+		var SString = row.cells[3].innerHTML;
 		var S = SString.match(/Yes/gi);
-		drawPoint()
+		drawPoint(context, X, Y, (!S || S.length < 1) ? false : true);
 	}
-}*/
+}
 
 window.onload = function() {
 	setRadius();
 	canvasFill();
+	initiateGraph();
 };

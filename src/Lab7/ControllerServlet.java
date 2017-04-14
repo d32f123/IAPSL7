@@ -16,9 +16,6 @@ public class ControllerServlet extends HttpServlet {
         String yString=request.getParameter("y_coord");
         String rString=request.getParameter("rBox");
 
-        ServletContext context = getServletContext( );
-        context.log("No message received:");
-
        	response.setHeader("Content-Type", "text/html; charset=UTF-8");
 	if(xString == null || yString == null || rString == null){
 		request.getServletContext().getRequestDispatcher("/lab7.jsp").forward(request, response);

@@ -42,14 +42,19 @@ public class AreaCheckServlet extends HttpServlet {
             config.getServletContext().setAttribute("list", list);
         }
         response.setContentType("text/html");
+	
+	PrintWriter out = response.getWriter();
+	
 
         String[] xStrings = request.getParameterValues("xBox");
         Integer[] xValues = new Integer[xStrings.length];
         for (int i = 0; i < xStrings.length; ++i)
         {
             xValues[i] = Integer.parseInt(xStrings[i]);
+	    out.println("xStrings[" + i + "]: " + xStrings[i]);
         } 
-
+	out.println("y_coord: " + request.getParameter("y_coord"));
+	out.println("rBox: " + request.getParameter("rBox"));
         for (int i = 0; i < xValues.length; ++i)
         {
             int currX = xValues[i];

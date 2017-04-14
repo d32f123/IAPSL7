@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.io.IOException;
 
-/**
- * Created by 12 on 20.03.2017.
- */
 @WebServlet(name = "ControllerServlet", urlPatterns = {"/controller"})
 public class ControllerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

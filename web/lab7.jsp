@@ -53,7 +53,7 @@
 
 					<h2>Формы</h2>
 					<div class="main_content">
-						<form method="post" action="controller" id="getdata">
+						<form method="post" action="checking" id="getdata">
 						<table name="table" cellspacing="0" cellpadding="0">
 						
    							<tr> 

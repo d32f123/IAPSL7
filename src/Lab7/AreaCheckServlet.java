@@ -52,7 +52,6 @@ public class AreaCheckServlet extends HttpServlet {
 
         for (int i = 0; i < xValues.length; ++i)
         {
-
             int currX = xValues[i];
             int currY = Integer.parseInt(request.getParameter("y_coord"));
             int currR = Integer.parseInt(request.getParameter("rBox"));

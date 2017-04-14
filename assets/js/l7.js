@@ -33,21 +33,6 @@ function selectRadius(num)
 	canvasFill();
 }
 
-function addTableEntry(x, y, R, S)
-{
-	var table = document.getElementById("results");
-	var row = table.insertRow(-1);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	var cell4 = row.insertCell(3);
-
-	cell1.innerHTML = x;
-	cell2.innerHTML = y;
-	cell3.innerHTML = R;
-	cell4.innerHTML = S == 1 ? "Yes" : "No";
-}
-
 function ychk(textbox) 
 {
 	var num = parseFloat(textbox.value);
@@ -205,7 +190,7 @@ function drawFigure(context)
 function doRequest(x, y)
 {
 	return_data = [];
-	canvas = document.getElementById("graph");
+	var canvas = document.getElementById("graph");
 	$.ajax({
 			type:"get",
 			url:"/lab7/checking",
@@ -220,7 +205,7 @@ function doRequest(x, y)
 	function onAjaxSuccess(data)
 	{
 		return_data = JSON.parse(data);
-		context = canvas.getContext("2d");
+		var context = canvas.getContext("2d");
 		for (i = 0; i < return_data.length; ++i)
 		{
 			coord_x = x[i] * k + 300;
@@ -231,6 +216,40 @@ function doRequest(x, y)
 	}
 }
 
+function addTableEntry(x, y, R, S)
+{
+	var table = document.getElementById("results");
+	var row = table.insertRow(-1);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+
+	cell1.innerHTML = x;
+	cell2.innerHTML = y;
+	cell3.innerHTML = R;
+	cell4.innerHTML = S == 1 ? "Yes" : "No";
+}
+
+/*function initiateGraph()
+{
+	var canvas = document.getElementById("graph");
+	var context = canvas.getContext("2d");
+	var table = document.getElementById("results");
+	var length = table.rows.length;
+	for (var i = 0; i < length; ++i)
+	{
+		var row = table.rows[i];
+		var X = row.cells[0];
+		var Y = row.cells[1];
+		var R = row.cells[2];
+		var SString = row.cells[3];
+		var S = SString.match(/Yes/gi);
+		drawPoint()
+	}
+}*/
+
 window.onload = function() {
+	setRadius();
 	canvasFill();
 };

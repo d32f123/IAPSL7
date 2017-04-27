@@ -91,6 +91,7 @@ public class AreaCheckServlet extends HttpServlet {
             String xString = request.getParameter("x_coord");
             String yString = request.getParameter("y_coord");
             String rString = request.getParameter("rBox");
+            boolean doSave = (parseInt(request.getParameter("doSave")) == 0 ? false : true);
 
 
             JsonReader jsonReader = Json.createReader(new StringReader(xString));
@@ -106,7 +107,8 @@ public class AreaCheckServlet extends HttpServlet {
                 double x = x_array.getJsonNumber(i).doubleValue();
                 double y = y_array.getJsonNumber(i).doubleValue();
                 boolean isInArea = checkArea(x, y, r);
-                list.add(new Point(x, y, r, isInArea));
+                if (doSave)
+                    list.add(new Point(x, y, r, isInArea));
                 result.add(isInArea);
             }
             JsonArray res = result.build();

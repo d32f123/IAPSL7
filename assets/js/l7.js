@@ -103,7 +103,7 @@ function setPoint(event)
 		real_y = -(y - 300) / k;
 		x_val.push(real_x);
 		y_val.push(real_y);
-		doRequest([real_x], [real_y]);
+		doRequest([real_x], [real_y], 1);
 	}
 }
 
@@ -208,7 +208,7 @@ function drawFigure(context)
 	context.fill();
 }
 
-function doRequest(x, y)
+function doRequest(x, y, save)
 {
 	return_data = [];
 	var canvas = document.getElementById("graph");
@@ -218,9 +218,10 @@ function doRequest(x, y)
 			data:{
 				x_coord: JSON.stringify(x),
 				y_coord: JSON.stringify(y),
-				rBox: R
+				rBox: R,
+				doSave: save
 			},
-			success: onAjaxSuccess
+			success: (save == 1 ? onAjaxSuccess : onAjaxSuccess1)
 		}
 		);
 	function onAjaxSuccess(data)
@@ -233,6 +234,17 @@ function doRequest(x, y)
 			coord_y = -y[i] * k + 300;
 			drawPoint(context, coord_x, coord_y, return_data[i]);
 			addTableEntry(x[i], y[i], R, return_data[i]);
+		}
+	}
+	function onAjaxSuccess1(data)
+	{
+		return_data = JSON.parse(data);
+		var context = canvas.getContext("2d");
+		for (i = 0; i < return_data.length; ++i)
+		{
+			coord_x = x[i] * k + 300;
+			coord_y = -y[i] * k + 300;
+			drawPoint(context, coord_x, coord_y, return_data[i]);
 		}
 	}
 }
@@ -259,7 +271,7 @@ function initiateGraph()
 	var table = document.getElementById("results");
 	var length = table.rows.length;
 	var mostRecentIndex = 1;
-	for (var i = 2; i < length; ++i)
+	/*for (var i = 2; i < length; ++i)
 	{	
 		var rowPrev = table.rows[i - 1];
 		var rowCurr = table.rows[i];
@@ -267,7 +279,7 @@ function initiateGraph()
 		{
 			mostRecentIndex = i;
 		}
-	}
+	}*/
 
 	rCheckBoxes = document.forms[0].elements.rBox;
 	var currentRadius = parseInt(table.rows[mostRecentIndex].cells[2].innerHTML);
@@ -277,11 +289,9 @@ function initiateGraph()
 	for (var i = mostRecentIndex; i < length; ++i)
 	{
 		var row = table.rows[i];
-		var X = parseFloat(row.cells[0].innerHTML) * k + 300;
-		var Y = - parseFloat(row.cells[1].innerHTML) * k + 300;
-		var SString = row.cells[3].innerHTML;
-		var S = SString.match(/Yes/gi);
-		drawPoint(context, X, Y, (!S || S.length < 1) ? false : true);
+		var X = parseFloat(row.cells[0].innerHTML);
+		var Y = parseFloat(row.cells[1].innerHTML);
+		doRequest([X], [Y], 0);
 	}
 }
 

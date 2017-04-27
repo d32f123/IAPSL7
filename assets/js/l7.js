@@ -54,6 +54,7 @@ function selectRadius(num)
 		}
 	}
 	canvasFill();
+	initiateGraph();
 }
 
 function ychk(textbox) 
